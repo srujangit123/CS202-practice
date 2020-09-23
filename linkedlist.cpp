@@ -7,6 +7,7 @@ struct Node {
 };
 
 struct Node* head = nullptr;
+// Course recommends usage of C language so I am using this instead of Node* head = new Node();
 
 void push_back(int x);
 void push_front(int x);
@@ -16,6 +17,7 @@ void print();
 void insert_between_sortedlist(int x);
 int find_element(int x);
 void delete_element(int x);
+bool check_if_sorted();
 
 
 void push_front(int x) {
@@ -25,6 +27,7 @@ void push_front(int x) {
     head = new_element;
     // new_element contains address of location of new Node we created
 }
+
 
 void push_back(int x) {
     struct Node* new_element = (struct Node*)malloc(sizeof(struct Node));
@@ -57,6 +60,7 @@ int find_element(int x) {
     return -1;
 }
 
+
 void print() {
     struct Node* i = head;
     while(i != nullptr) {
@@ -65,6 +69,7 @@ void print() {
     }
     cout << endl;
 }
+
 
 void insert_between_sortedlist(int x) {
     struct Node* new_element = (struct Node*)malloc(sizeof(struct Node));
@@ -116,6 +121,37 @@ void delete_element(int x) {
     
 }
 
+
+bool check_if_sorted() {
+    if(head == nullptr) {
+        cout << "List is empty. So ";
+        return false; 
+    }
+    bool is_ascending = true, is_descending = true;
+    Node* i = head;
+    int last = -1e9;
+    while(i != nullptr) {
+        if(i->data < last) {
+            is_ascending = false;
+            break;
+        }
+        last = i->data;
+        i = i->next;
+    }
+    last = 1e9;
+    i = head;
+    while(i != nullptr) {
+        if(i->data > last) {
+            is_descending = false;
+            break;
+        }
+        last = i->data;
+        i = i->next;
+    }
+    return is_ascending || is_descending;
+}
+
+
 void pop_front() {
     if(head == nullptr) return;
     head = head->next;
@@ -124,6 +160,10 @@ void pop_front() {
 
 void pop_back() {
     if(head == nullptr) return;
+    if(head->next == nullptr) {
+        head = nullptr;
+        return;
+    }
     struct Node* i = head;
     while(i->next->next != nullptr) {
         i = i->next;
@@ -144,9 +184,10 @@ int main() {
         cout << "6. Display\n";
         cout << "7. Pop Back\n";
         cout << "8. Pop front\n";
-        cout << "9. Stop\n";
+        cout << "9. Is the list in ascending or descending\n";
+        cout << "10. Stop\n";
         cin >> choice;
-        if(choice == 9) break;
+        if(choice == 10) break;
         switch (choice) {
             case 1: cin >> x;
                     push_front(x);
@@ -173,6 +214,12 @@ int main() {
                     break;
             case 8: pop_front();
                     break;
+            case 9: {
+                        bool ans = check_if_sorted();
+                        if(ans) cout << "Yes\n";
+                        else    cout << "No\n";
+                        break;
+                    }   
             default: exit(0);
         }
     }
