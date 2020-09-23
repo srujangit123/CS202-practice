@@ -9,15 +9,15 @@ struct Node {
 struct Node* head = nullptr;
 // Course recommends usage of C language so I am using this instead of Node* head = new Node();
 
-void push_back(int x);
-void push_front(int x);
-void pop_back();
-void pop_front();
-void print();
-void insert_between_sortedlist(int x);
-int find_element(int x);
-void delete_element(int x);
-bool check_if_sorted();
+void push_back(int x); // O(N)
+void push_front(int x); // O(1)
+void pop_back(); // O(N)
+void pop_front(); // O(1)
+void print(); // O(N)
+void insert_between_sortedlist(int x); // O(N)
+int find_element(int x); // O(N)
+void delete_element(int x); // O(N)
+bool check_if_sorted(); // O(N)
 
 
 void push_front(int x) {
